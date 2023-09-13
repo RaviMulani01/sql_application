@@ -1,0 +1,22 @@
+1. Create Database with name: STUDENTS
+
+2. add student_info name table
+CREATE TABLE student_info (
+    studentid INT PRIMARY KEY,
+    name VARCHAR(255),
+    phonenumber VARCHAR(20),
+    city VARCHAR(50)
+);
+
+#body payload for the POST and PATCH request
+{
+    "studentid": $studentid,
+    "name": "$name",
+    "phonenumber": "$000-000-000",
+    "city": "$city"
+}
+
+#body payload for the DELETE request
+{
+    "studentid": $studentid
+}
