@@ -1,0 +1,3 @@
+First, you'll need to install Flask and a database connector library if you haven't already. For example, if you're using MySQL, you can install Flask and the MySQL connector like this:
+pip install Flask
+pip install mysql-connector-python
