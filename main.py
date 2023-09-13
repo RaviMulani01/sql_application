@@ -41,6 +41,38 @@ def get_students():
 
     except Exception as e:
         return jsonify({"error": str(e)})
+    
+@app.route('/addstudents', methods=['POST'])
+def add_student():
+    try:
+        # Establish a database connection
+        connection = Connection.getConn()
+
+        # Create a cursor to interact with the database
+        cursor = connection.cursor()
+
+        # Get data from the request
+        data = request.json
+        student_id = data['studentid']
+        name = data['name']
+        phone_number = data['phonenumber']
+        city = data['city']
+
+        # Execute an SQL query to insert a new student
+        insert_query = "INSERT INTO student_info (studentid, name, phonenumber, city) VALUES (%s, %s, %s, %s)"
+        cursor.execute(insert_query, (student_id, name, phone_number, city))
+
+        # Commit the transaction
+        connection.commit()
+
+        # Close cursor and connection
+        cursor.close()
+        Connection.closeConn(connection)
+
+        return 'Data added successfully'
+
+    except Exception as e:
+        return jsonify({"error": str(e)})
 
 if __name__ == '__main__':
     # make debug true to see the log details while app is running
