@@ -77,11 +77,11 @@ def add_student():
         return jsonify({"error": str(e)})
 
 # Create PATCH endpoint for add student 
-#URI : PATCH: http://127.0.0.1:5000//api/update/studentidNumber(1,2,3,etc..)       
-@app.route('/api/update/<int:id>', methods=['PATCH'])
+#URI : PATCH: http://127.0.0.1:5000/updatestudentinfo/studentidNumber(1,2,3,etc..)       
+@app.route('/updatestudentinfo/<int:id>', methods=['PATCH'])
 def update_data(id):
     try:
-           # Establish a database connection
+        # Establish a database connection
         connection = Connection.getConn()
 
         # Create a cursor to interact with the database
@@ -111,6 +111,41 @@ def update_data(id):
             return 'No matching student found for the specified studentid', 404
         else:
             return 'Data updated successfully'
+    
+    except Exception as e:
+        return str(e)
+    
+@app.route('/deletestudentinfo', methods=['DELETE'])
+def delete_data():
+    try:
+       # Establish a database connection
+        connection = Connection.getConn()
+
+        # Create a cursor to interact with the database
+        cursor = connection.cursor()
+
+        data = request.json  # Assuming the JSON data contains keys 'studentid'.
+        
+        # Get data from the request
+        student_id = data['studentid']
+
+        # Execute an SQL query to delete the student based on their studentid
+        delete_query = "DELETE FROM student_info WHERE studentid=%s"
+        cursor.execute(delete_query, (student_id,))
+
+        # Check how many rows were affected by the update
+        rows_affected = cursor.rowcount
+
+        connection.commit()
+
+        # Close cursor and connection
+        cursor.close()
+        Connection.closeConn(connection)
+    
+        if rows_affected == 0:
+            return 'No matching student found for the specified studentid', 404
+        else:
+            return 'Data deleted successfully'
     
     except Exception as e:
         return str(e)
