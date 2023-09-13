@@ -115,6 +115,8 @@ def update_data(id):
     except Exception as e:
         return str(e)
     
+# Create delete endpoint for add student 
+#URI : PATCH: http://127.0.0.1:5000/deletestudentinfo     
 @app.route('/deletestudentinfo', methods=['DELETE'])
 def delete_data():
     try:
