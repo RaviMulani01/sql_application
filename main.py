@@ -42,6 +42,8 @@ def get_students():
     except Exception as e:
         return jsonify({"error": str(e)})
     
+# Create get endpoint for retrive all student Info
+#URI : POST: http://127.0.0.1:5000/addstudents    
 @app.route('/addstudents', methods=['POST'])
 def add_student():
     try:
